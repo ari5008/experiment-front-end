@@ -1,6 +1,4 @@
-import { forwardRef } from "react";
-
-const Input = forwardRef((props, ref) => {
+const Input = (props) => {
     return (
         <div className="mb-3">
             <label htmlFor={props.name} className="form-label">
@@ -10,7 +8,6 @@ const Input = forwardRef((props, ref) => {
                 type={props.type}
                 className={props.className}
                 id={props.name}
-                ref={ref}
                 name={props.name}
                 placeholder={props.placeholder}
                 onChange={props.onChange}
@@ -20,6 +17,6 @@ const Input = forwardRef((props, ref) => {
             <div className={props.errorDiv}>{props.errorMsg}</div>
         </div>
     )
-})
+}
 
 export default Input;
