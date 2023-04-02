@@ -23,6 +23,11 @@ const ManageCatalogue = () => {
         fetch(`http://localhost:8080/admin/movies`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
+                data.map((m) => {
+                    m.release_date = new Date(m.release_date)
+                        .toISOString()
+                        .split("T")[0];
+                })
                 setMovies(data);
             })
             .catch(err => {

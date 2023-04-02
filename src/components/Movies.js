@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Movies = () => {
     const [movies, setMovies] = useState([]);
 
-    useEffect( () => {
+    useEffect(() => {
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
 
@@ -16,6 +16,11 @@ const Movies = () => {
         fetch(`http://localhost:8080/movies`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
+                data.map((m) => {
+                    m.release_date = new Date(m.release_date)
+                        .toISOString()
+                        .split("T")[0];
+                })
                 setMovies(data);
             })
             .catch(err => {
@@ -24,7 +29,7 @@ const Movies = () => {
 
     }, []);
 
-    return(
+    return (
         <div>
             <h2>Movies</h2>
             <hr />
@@ -46,7 +51,7 @@ const Movies = () => {
                             </td>
                             <td>{m.release_date}</td>
                             <td>{m.mpaa_rating}</td>
-                        </tr>    
+                        </tr>
                     ))}
                 </tbody>
             </table>
