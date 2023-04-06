@@ -132,7 +132,7 @@ const EditMovie = () => {
           console.log(err);
         });
     }
-  }, [id, jwtToken, navigate]);
+  }, [id, jwtToken, navigate]); 
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -241,35 +241,35 @@ const EditMovie = () => {
 
   const confirmDelete = () => {
     Swal.fire({
-        title: 'Delete movie?',
-        text: "You cannot undo this action!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-            let headers = new Headers();
-            headers.append("Authorization", "Bearer " + jwtToken)
+      title: 'Delete movie?',
+      text: "You cannot undo this action!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let headers = new Headers();
+        headers.append("Authorization", "Bearer " + jwtToken)
 
-            const requestOptions = {
-                method: "DELETE",
-                headers: headers,
-            }
-
-          fetch(`http://localhost:8080/admin/movies/${movie.id}`, requestOptions)
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.error) {
-                    console.log(data.error);
-                } else {
-                    navigate("/manage-catalogue");
-                }
-            })
-            .catch(err => {console.log(err)});
+        const requestOptions = {
+          method: "DELETE",
+          headers: headers,
         }
-      })
+
+        fetch(`http://localhost:8080/admin/movies/${movie.id}`, requestOptions)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.error) {
+              console.log(data.error);
+            } else {
+              navigate("/manage-catalogue");
+            }
+          })
+          .catch(err => { console.log(err) });
+      }
+    })
   }
 
   if (error !== null) {

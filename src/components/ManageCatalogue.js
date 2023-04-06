@@ -6,7 +6,7 @@ const ManageCatalogue = () => {
     const { jwtToken } = useOutletContext();
     const navigate = useNavigate();
 
-    useEffect( () => {
+    useEffect(() => {
         if (jwtToken === "") {
             navigate("/login");
             return
@@ -23,12 +23,13 @@ const ManageCatalogue = () => {
         fetch(`http://localhost:8080/admin/movies`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
-                data.map((m) => {
+                const newData = data.map((m) => {
                     m.release_date = new Date(m.release_date)
                         .toISOString()
                         .split("T")[0];
+                    return m
                 })
-                setMovies(data);
+                setMovies(newData);
             })
             .catch(err => {
                 console.log(err);
@@ -36,7 +37,7 @@ const ManageCatalogue = () => {
 
     }, [jwtToken, navigate]);
 
-    return(
+    return (
         <div>
             <h2>Manage Catalogue</h2>
             <hr />
@@ -58,7 +59,7 @@ const ManageCatalogue = () => {
                             </td>
                             <td>{m.release_date}</td>
                             <td>{m.mpaa_rating}</td>
-                        </tr>    
+                        </tr>
                     ))}
                 </tbody>
             </table>
